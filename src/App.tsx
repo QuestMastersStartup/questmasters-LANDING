@@ -14,6 +14,9 @@ import Chatbot from "./pages/Chatbot";
 import Characters from "./pages/Characters";
 import Campaigns from "./pages/Campaigns";
 import Books from "./pages/Books";
+import Pricing from "./pages/Pricing";
+import Board2D from "./pages/Board2D";
+import Homebrew from "./pages/Homebrew";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -66,6 +69,30 @@ const App = () => (
             element={
               <SidebarProvider>
                 <Books />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/pricing" 
+            element={
+              <SidebarProvider>
+                <Pricing />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/board" 
+            element={
+              <SidebarProvider>
+                <Board2D />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/homebrew" 
+            element={
+              <SidebarProvider>
+                <Homebrew />
               </SidebarProvider>
             } 
           />

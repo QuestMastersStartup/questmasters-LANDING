@@ -5,7 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageSquare, Send, Bot, User, Sparkles, Dice6, Map, Scroll } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageSquare, Send, Bot, User, Sparkles, Dice6, Map, Scroll, Crown, Settings } from "lucide-react";
 import { useState } from "react";
 
 interface Message {
@@ -20,32 +22,63 @@ const Chatbot = () => {
     {
       id: 1,
       type: 'bot',
-      content: '¡Saludos, aventurero! Soy tu Dungeon Master asistente de IA. Estoy aquí para ayudarte a crear campañas épicas, desarrollar NPCs memorables, generar encuentros emocionantes y responder cualquier pregunta sobre D&D. ¿En qué aventura trabajaremos hoy?',
+      content: '¡Saludos, aventurero! Soy tu asistente de IA especializado en D&D. Puedo actuar como tu Dungeon Master personal o como asistente para ayudarte con reglas, creación de contenido y gestión de campañas. ¿En qué modo prefieres que trabajemos hoy?',
       timestamp: '10:30'
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [mode, setMode] = useState<'assistant' | 'dm'>('assistant');
+  const [selectedCampaign, setSelectedCampaign] = useState('waterdeep');
 
-  const quickActions = [
+  const campaigns = [
+    { id: 'waterdeep', name: 'Los Secretos de Waterdeep', active: true },
+    { id: 'crown', name: 'La Corona Perdida', active: true },
+    { id: 'dragon', name: 'El Dragón del Norte', active: false }
+  ];
+
+  const assistantActions = [
     {
       icon: Dice6,
-      text: "Generar Encuentro",
-      prompt: "Genera un encuentro balanceado para un grupo de 4 personajes de nivel 5"
+      text: "Explicar Reglas",
+      prompt: "Explícame cómo funcionan los ataques de oportunidad en D&D 5e"
     },
     {
       icon: Map,
-      text: "Crear Mazmorra",
-      prompt: "Crea una mazmorra de 5 habitaciones con trampas y tesoros"
+      text: "Crear Contenido",
+      prompt: "Ayúdame a crear un NPC interesante para mi taberna"
     },
     {
       icon: Scroll,
-      text: "Historia de Fondo",
-      prompt: "Ayúdame a crear una historia de fondo para mi campaña"
+      text: "Consulta Rápida",
+      prompt: "¿Cuáles son los componentes del hechizo Bola de Fuego?"
     },
     {
       icon: User,
+      text: "Optimizar Personaje",
+      prompt: "¿Qué multiclase recomendarías para un Guerrero nivel 5?"
+    }
+  ];
+
+  const dmActions = [
+    {
+      icon: Crown,
+      text: "Continuar Historia",
+      prompt: "Continúa la narrativa desde donde la dejamos en la última sesión"
+    },
+    {
+      icon: Dice6,
+      text: "Generar Encuentro",
+      prompt: "Crea un encuentro balanceado para el grupo actual"
+    },
+    {
+      icon: Map,
+      text: "Describir Ubicación",
+      prompt: "Describe la entrada a las mazmorras ancestrales"
+    },
+    {
+      icon: Scroll,
       text: "Crear NPC",
-      prompt: "Crea un NPC interesante para mi taberna"
+      prompt: "Genera un mercader misterioso con sus propias motivaciones"
     }
   ];
 
@@ -61,12 +94,14 @@ const Chatbot = () => {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // Simulate bot response
+    // Simulate bot response based on mode
     setTimeout(() => {
       const botResponse: Message = {
         id: messages.length + 2,
         type: 'bot',
-        content: '¡Excelente pregunta! Basándome en tu solicitud, te recomiendo lo siguiente... *[Aquí estaría la respuesta generada por IA]*',
+        content: mode === 'dm' 
+          ? `*Como DM de "${campaigns.find(c => c.id === selectedCampaign)?.name}"*: Basándome en el contexto actual de tu campaña, puedo ofrecerte lo siguiente...`
+          : '¡Excelente pregunta! Como tu asistente de D&D, te recomiendo lo siguiente...',
         timestamp: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, botResponse]);
@@ -78,6 +113,8 @@ const Chatbot = () => {
   const handleQuickAction = (prompt: string) => {
     setInputMessage(prompt);
   };
+
+  const currentActions = mode === 'dm' ? dmActions : assistantActions;
 
   return (
     <div className="min-h-screen flex w-full">
@@ -94,12 +131,23 @@ const Chatbot = () => {
               </div>
               <div>
                 <h1 className="font-cinzel font-bold text-2xl gold-gradient">
-                  Dungeon Master IA
+                  Asistente IA de D&D
                 </h1>
                 <p className="text-muted-foreground">
-                  Tu asistente personal para campañas de D&D
+                  {mode === 'dm' ? 'Modo Dungeon Master' : 'Modo Asistente'}
                 </p>
               </div>
+            </div>
+            <div className="ml-auto flex items-center gap-3">
+              <Tabs value={mode} onValueChange={(value) => setMode(value as 'assistant' | 'dm')}>
+                <TabsList>
+                  <TabsTrigger value="assistant">Asistente</TabsTrigger>
+                  <TabsTrigger value="dm">Dungeon Master</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Button variant="outline" className="hover-glow">
+                <Settings className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         </div>
@@ -107,6 +155,27 @@ const Chatbot = () => {
         <div className="flex-1 flex">
           {/* Chat Area */}
           <div className="flex-1 flex flex-col">
+            {/* Campaign Selector (DM Mode) */}
+            {mode === 'dm' && (
+              <div className="border-b border-border/50 p-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium">Campaña Activa:</span>
+                  <div className="flex gap-2">
+                    {campaigns.map((campaign) => (
+                      <Badge
+                        key={campaign.id}
+                        variant={selectedCampaign === campaign.id ? "default" : "outline"}
+                        className={`cursor-pointer hover-glow ${!campaign.active ? 'opacity-50' : ''}`}
+                        onClick={() => campaign.active && setSelectedCampaign(campaign.id)}
+                      >
+                        {campaign.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Messages */}
             <ScrollArea className="flex-1 p-6">
               <div className="space-y-4 max-w-4xl mx-auto">
@@ -156,7 +225,10 @@ const Chatbot = () => {
                   <Input
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
-                    placeholder="Escribe tu pregunta sobre D&D aquí..."
+                    placeholder={mode === 'dm' 
+                      ? "Describe lo que quieres que suceda en la campaña..." 
+                      : "Escribe tu pregunta sobre D&D aquí..."
+                    }
                     className="flex-1 bg-input border-border/50 focus:border-primary"
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   />
@@ -171,17 +243,17 @@ const Chatbot = () => {
             </div>
           </div>
 
-          {/* Sidebar with Quick Actions */}
+          {/* Sidebar with Actions */}
           <div className="w-80 border-l border-border/50 p-6">
             <Card className="glass-effect">
               <CardHeader>
                 <CardTitle className="font-cinzel flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-primary" />
-                  Acciones Rápidas
+                  {mode === 'dm' ? 'Herramientas de DM' : 'Acciones Rápidas'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {quickActions.map((action, index) => (
+                {currentActions.map((action, index) => (
                   <Button
                     key={index}
                     variant="outline"
@@ -195,16 +267,51 @@ const Chatbot = () => {
               </CardContent>
             </Card>
 
+            {mode === 'dm' && (
+              <Card className="glass-effect mt-6">
+                <CardHeader>
+                  <CardTitle className="font-cinzel text-sm">Estado de Campaña</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Sesión Actual:</span>
+                      <span className="font-medium">12</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Jugadores:</span>
+                      <span className="font-medium">4 activos</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Ubicación:</span>
+                      <span className="font-medium">Waterdeep</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             <Card className="glass-effect mt-6">
               <CardHeader>
                 <CardTitle className="font-cinzel text-sm">Consejos</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-xs text-muted-foreground">
-                  <p>• Sé específico en tus preguntas</p>
-                  <p>• Menciona el nivel de los personajes</p>
-                  <p>• Describe el tono de tu campaña</p>
-                  <p>• Pregunta sobre reglas si tienes dudas</p>
+                  {mode === 'dm' ? (
+                    <>
+                      <p>• Mantén el ritmo de la narrativa</p>
+                      <p>• Describe escenas con detalle</p>
+                      <p>• Ajusta la dificultad al grupo</p>
+                      <p>• Fomenta la interpretación</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>• Sé específico en tus preguntas</p>
+                      <p>• Menciona el nivel de los personajes</p>
+                      <p>• Describe el contexto de tu campaña</p>
+                      <p>• Pregunta sobre reglas si tienes dudas</p>
+                    </>
+                  )}
                 </div>
               </CardContent>
             </Card>

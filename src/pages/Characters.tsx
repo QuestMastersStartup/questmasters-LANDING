@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { User, Plus, Search, Edit, Trash2, Sword, Shield, Heart, Zap } from "lucide-react";
+import { User, Plus, Search, Edit, Trash2, Sword, Shield, Heart, Star, Upload, Image } from "lucide-react";
 import { useState } from "react";
 
 interface Character {
@@ -14,11 +14,13 @@ interface Character {
   class: string;
   race: string;
   level: number;
+  experience: number;
+  maxExperience: number;
   hp: number;
   maxHp: number;
-  ac: number;
   campaign: string;
   avatar: string;
+  isCustomAvatar: boolean;
 }
 
 const Characters = () => {
@@ -29,11 +31,13 @@ const Characters = () => {
       class: "Guerrero",
       race: "Enano",
       level: 8,
+      experience: 34500,
+      maxExperience: 48000,
       hp: 68,
       maxHp: 75,
-      ac: 18,
       campaign: "Los Secretos de Waterdeep",
-      avatar: "🛡️"
+      avatar: "🛡️",
+      isCustomAvatar: false
     },
     {
       id: 2,
@@ -41,11 +45,13 @@ const Characters = () => {
       class: "Explorador",
       race: "Elfo",
       level: 6,
+      experience: 14250,
+      maxExperience: 23000,
       hp: 42,
       maxHp: 48,
-      ac: 15,
       campaign: "La Corona Perdida",
-      avatar: "🏹"
+      avatar: "/placeholder.svg",
+      isCustomAvatar: true
     },
     {
       id: 3,
@@ -53,11 +59,13 @@ const Characters = () => {
       class: "Mago",
       race: "Humano",
       level: 7,
+      experience: 24800,
+      maxExperience: 34000,
       hp: 35,
       maxHp: 42,
-      ac: 12,
       campaign: "Los Secretos de Waterdeep",
-      avatar: "🔮"
+      avatar: "🔮",
+      isCustomAvatar: false
     }
   ]);
 
@@ -78,6 +86,10 @@ const Characters = () => {
       'Pícaro': 'bg-purple-500/20 text-purple-400'
     };
     return colors[className] || 'bg-gray-500/20 text-gray-400';
+  };
+
+  const getExperienceProgress = (current: number, max: number) => {
+    return (current / max) * 100;
   };
 
   return (
@@ -125,8 +137,19 @@ const Characters = () => {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center text-2xl">
-                      {character.avatar}
+                    <div className="relative w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center text-2xl overflow-hidden">
+                      {character.isCustomAvatar ? (
+                        <img 
+                          src={character.avatar} 
+                          alt={character.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>{character.avatar}</span>
+                      )}
+                      <Button size="sm" variant="ghost" className="absolute -bottom-1 -right-1 w-5 h-5 p-0 bg-muted rounded-full hover-glow">
+                        <Upload className="w-3 h-3" />
+                      </Button>
                     </div>
                     <div>
                       <CardTitle className="font-cinzel text-lg">{character.name}</CardTitle>
@@ -156,11 +179,27 @@ const Characters = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                    <Shield className="w-4 h-4 text-blue-400" />
+                    <Star className="w-4 h-4 text-yellow-400" />
                     <div>
-                      <p className="text-sm font-medium">{character.ac}</p>
-                      <p className="text-xs text-muted-foreground">Clase de Armadura</p>
+                      <p className="text-sm font-medium">{character.experience.toLocaleString()}</p>
+                      <p className="text-xs text-muted-foreground">Experiencia</p>
                     </div>
+                  </div>
+                </div>
+
+                {/* Experience Progress */}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">Progreso de Nivel</span>
+                    <span className="text-sm text-muted-foreground">
+                      {character.experience.toLocaleString()} / {character.maxExperience.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted/50 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-yellow-400 to-orange-400 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${getExperienceProgress(character.experience, character.maxExperience)}%` }}
+                    ></div>
                   </div>
                 </div>
 
@@ -187,7 +226,7 @@ const Characters = () => {
                     <Sword className="w-4 h-4" />
                   </Button>
                   <Button size="sm" variant="outline" className="hover-glow">
-                    <Zap className="w-4 h-4" />
+                    <Image className="w-4 h-4" />
                   </Button>
                 </div>
               </CardContent>
