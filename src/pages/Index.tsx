@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, User, Users, BookOpen, Sparkles, Shield, Sword } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MessageSquare, User, Users, BookOpen, Sparkles, Shield, Sword, Check, Crown, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -25,6 +26,64 @@ const Index = () => {
       icon: BookOpen,
       title: "Biblioteca de Contenido",
       description: "Accede a una vasta colección de libros, reglas y contenido oficial de D&D."
+    }
+  ];
+
+  const plans = [
+    {
+      name: "Free",
+      price: "$0",
+      period: "/mes",
+      description: "Perfecto para comenzar tu aventura",
+      icon: Shield,
+      features: [
+        "Máximo 5 personajes",
+        "1 campaña con IA",
+        "Uso limitado del chatbot",
+        "Herramientas básicas de D&D",
+        "Acceso a reglas básicas"
+      ],
+      popular: false,
+      buttonText: "Comenzar Gratis",
+      color: "bg-muted"
+    },
+    {
+      name: "Básico",
+      price: "$10",
+      period: "/mes",
+      description: "Para aventureros dedicados",
+      icon: Star,
+      features: [
+        "Personajes ilimitados",
+        "Más opciones de personalización",
+        "Personalización de equipo base",
+        "Trasfondos personalizables",
+        "Rasgos y linaje personalizable",
+        "Más usos del chatbot",
+        "Campañas ligeramente personalizables"
+      ],
+      popular: true,
+      buttonText: "Elegir Básico",
+      color: "bg-primary/10"
+    },
+    {
+      name: "Completo",
+      price: "$20",
+      period: "/mes",
+      description: "Para Dungeon Masters profesionales",
+      icon: Crown,
+      features: [
+        "Todo del plan Básico",
+        "Personalización completa de campañas",
+        "Muchos más usos del chatbot",
+        "Acceso completo a libros adicionales",
+        "Integración de IA en tablero 2D",
+        "Mayor personalización de campaña",
+        "Soporte prioritario"
+      ],
+      popular: false,
+      buttonText: "Elegir Completo",
+      color: "bg-gradient-to-br from-yellow-500/20 to-orange-500/20"
     }
   ];
 
@@ -103,6 +162,65 @@ const Index = () => {
                   </div>
                   <h3 className="font-cinzel font-semibold text-lg mb-3">{feature.title}</h3>
                   <p className="text-muted-foreground text-sm">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-20 px-6">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-cinzel font-bold text-4xl mb-4 gold-gradient">
+              Planes de Suscripción
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Elige el plan perfecto para tu estilo de juego
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {plans.map((plan, index) => (
+              <Card key={index} className={`glass-effect relative ${plan.popular ? 'ring-2 ring-primary scale-105' : ''} hover-glow transition-all duration-300`}>
+                {plan.popular && (
+                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
+                    Más Popular
+                  </Badge>
+                )}
+                
+                <CardHeader className="text-center pb-4">
+                  <div className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center mb-4 ${plan.color}`}>
+                    <plan.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <CardTitle className="font-cinzel text-2xl">{plan.name}</CardTitle>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-4xl font-bold gold-gradient">{plan.price}</span>
+                    <span className="text-muted-foreground">{plan.period}</span>
+                  </div>
+                  <CardDescription>{plan.description}</CardDescription>
+                </CardHeader>
+
+                <CardContent className="space-y-6">
+                  <div>
+                    <ul className="space-y-2">
+                      {plan.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <Check className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <Button 
+                    className={`w-full hover-glow ${plan.popular ? 'bg-primary hover:bg-primary/90' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    size="lg"
+                  >
+                    {plan.buttonText}
+                  </Button>
                 </CardContent>
               </Card>
             ))}

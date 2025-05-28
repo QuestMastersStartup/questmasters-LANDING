@@ -5,8 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Users, Plus, Search, Edit, Trash2, Calendar, MapPin, Star, Play } from "lucide-react";
+import { Users, Plus, Search, Edit, Trash2, Calendar, MapPin, Play } from "lucide-react";
 import { useState } from "react";
 
 interface Campaign {
@@ -16,10 +15,8 @@ interface Campaign {
   status: 'active' | 'planning' | 'completed';
   players: number;
   maxPlayers: number;
-  level: string;
   sessions: number;
   nextSession: string;
-  progress: number;
   dm: string;
 }
 
@@ -32,10 +29,8 @@ const Campaigns = () => {
       status: 'active',
       players: 4,
       maxPlayers: 6,
-      level: "5-8",
       sessions: 12,
       nextSession: "2024-01-15",
-      progress: 65,
       dm: "Dungeon Master IA"
     },
     {
@@ -45,10 +40,8 @@ const Campaigns = () => {
       status: 'active',
       players: 3,
       maxPlayers: 5,
-      level: "3-6",
       sessions: 8,
       nextSession: "2024-01-18",
-      progress: 40,
       dm: "Dungeon Master IA"
     },
     {
@@ -58,10 +51,8 @@ const Campaigns = () => {
       status: 'planning',
       players: 2,
       maxPlayers: 6,
-      level: "1-3",
       sessions: 0,
       nextSession: "2024-01-22",
-      progress: 10,
       dm: "Dungeon Master IA"
     }
   ]);
@@ -158,30 +149,14 @@ const Campaigns = () => {
               </CardHeader>
               <CardContent>
                 {/* Campaign Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 gap-4 mb-4">
                   <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
                     <Users className="w-4 h-4 text-primary" />
                     <div>
-                      <p className="text-sm font-medium">{campaign.players}/{campaign.maxPlayers}</p>
-                      <p className="text-xs text-muted-foreground">Jugadores</p>
+                      <p className="text-sm font-medium">{campaign.players}/{campaign.maxPlayers} Jugadores</p>
+                      <p className="text-xs text-muted-foreground">Participantes actuales</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <div>
-                      <p className="text-sm font-medium">Nivel {campaign.level}</p>
-                      <p className="text-xs text-muted-foreground">Rango</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Progress */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Progreso de Campaña</span>
-                    <span className="text-sm text-muted-foreground">{campaign.progress}%</span>
-                  </div>
-                  <Progress value={campaign.progress} className="h-2" />
                 </div>
 
                 {/* Session Info */}

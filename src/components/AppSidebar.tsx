@@ -1,5 +1,5 @@
 
-import { Home, User, Users, Book, BookOpen, MessageSquare, LogOut } from "lucide-react";
+import { Home, User, Users, Book, BookOpen, MessageSquare, LogOut, Sparkles } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Sidebar,
@@ -40,6 +40,21 @@ const menuItems = [
     title: "Biblioteca",
     url: "/books",
     icon: BookOpen,
+  },
+  {
+    title: "Homebrew",
+    url: "/homebrew",
+    icon: Sparkles,
+  },
+  {
+    title: "Tablero 2D",
+    url: "/board",
+    icon: Book,
+  },
+  {
+    title: "Suscripciones",
+    url: "/pricing",
+    icon: Book,
   },
 ];
 
