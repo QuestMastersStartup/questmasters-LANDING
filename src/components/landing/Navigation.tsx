@@ -8,9 +8,9 @@ export const Navigation = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img 
-              src="/lovable-uploads/aa2c7a23-1dac-4d62-80ac-7dbbb78d9542.png" 
+              src="/lovable-uploads/0e38836b-c94b-440f-b579-0835578ddd1a.png" 
               alt="QuestMasters Logo" 
-              className="h-8 object-contain"
+              className="h-10 object-contain"
             />
           </div>
           <div className="flex items-center gap-4">

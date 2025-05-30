@@ -11,9 +11,9 @@ export const HeroSection = () => {
           <img 
             src="/lovable-uploads/d8accbc9-1526-4bd7-b2fb-268ad83752ea.png" 
             alt="QuestMasters Icon" 
-            className="w-16 h-16 animate-pulse-glow filter drop-shadow-lg"
+            className="w-20 h-20 animate-pulse-glow filter drop-shadow-lg object-contain"
             style={{
-              filter: 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.3))'
+              filter: 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 45px rgba(255, 215, 0, 0.2))'
             }}
           />
         </div>

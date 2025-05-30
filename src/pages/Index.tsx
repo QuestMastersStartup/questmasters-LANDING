@@ -5,7 +5,6 @@ import { ProblemSolutionSection } from "@/components/landing/ProblemSolutionSect
 import { VisionSection } from "@/components/landing/VisionSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { DemoSection } from "@/components/landing/DemoSection";
-import { UpcomingFeaturesSection } from "@/components/landing/UpcomingFeaturesSection";
 import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FAQSection } from "@/components/landing/FAQSection";
@@ -21,7 +20,6 @@ const Index = () => {
       <VisionSection />
       <FeaturesSection />
       <DemoSection />
-      <UpcomingFeaturesSection />
       <TestimonialsSection />
       <PricingSection />
       <FAQSection />

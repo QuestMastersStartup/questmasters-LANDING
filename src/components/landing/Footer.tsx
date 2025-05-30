@@ -7,9 +7,9 @@ export const Footer = () => {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="/lovable-uploads/aa2c7a23-1dac-4d62-80ac-7dbbb78d9542.png" 
+                src="/lovable-uploads/0e38836b-c94b-440f-b579-0835578ddd1a.png" 
                 alt="QuestMasters Logo" 
-                className="h-6 object-contain"
+                className="h-8 object-contain"
               />
             </div>
             <p className="text-muted-foreground text-sm">
