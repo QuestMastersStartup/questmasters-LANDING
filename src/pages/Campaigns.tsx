@@ -86,26 +86,26 @@ const Campaigns = () => {
     <div className="min-h-screen flex w-full">
       <AppSidebar />
       
-      <main className="flex-1 p-6">
-        <div className="flex items-center gap-4 mb-8">
+      <main className="flex-1 p-3 sm:p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <SidebarTrigger className="hover-glow" />
-          <div className="flex-1">
-            <h1 className="font-cinzel font-bold text-3xl gold-gradient">
+          <div className="text-center sm:text-left flex-1">
+            <h1 className="font-cinzel font-bold text-2xl sm:text-3xl gold-gradient">
               Gestión de Campañas
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm sm:text-base">
               Administra y organiza tus campañas de D&D
             </p>
           </div>
-          <Button className="hover-glow bg-primary hover:bg-primary/90">
+          <Button className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto">
             <Plus className="w-4 h-4 mr-2" />
             Nueva Campaña
           </Button>
         </div>
 
         {/* Search and Filter */}
-        <Card className="glass-effect mb-6">
-          <CardContent className="p-4">
+        <Card className="glass-effect mb-4 sm:mb-6">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -121,14 +121,14 @@ const Campaigns = () => {
         </Card>
 
         {/* Campaigns Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
           {filteredCampaigns.map((campaign) => (
             <Card key={campaign.id} className="glass-effect hover-glow transition-all duration-300">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <CardTitle className="font-cinzel text-xl">{campaign.name}</CardTitle>
+              <CardHeader className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
+                  <div className="flex-1 w-full">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                      <CardTitle className="font-cinzel text-lg sm:text-xl">{campaign.name}</CardTitle>
                       <Badge className={getStatusColor(campaign.status)}>
                         {getStatusText(campaign.status)}
                       </Badge>
@@ -137,7 +137,7 @@ const Campaigns = () => {
                       {campaign.description}
                     </CardDescription>
                   </div>
-                  <div className="flex gap-1 ml-4">
+                  <div className="flex gap-1 self-end sm:self-start">
                     <Button size="sm" variant="ghost" className="hover-glow">
                       <Edit className="w-4 h-4" />
                     </Button>
@@ -147,11 +147,11 @@ const Campaigns = () => {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 sm:p-6 pt-0">
                 {/* Campaign Stats */}
-                <div className="grid grid-cols-1 gap-4 mb-4">
+                <div className="grid grid-cols-1 gap-3 sm:gap-4 mb-4">
                   <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                    <Users className="w-4 h-4 text-primary" />
+                    <Users className="w-4 h-4 text-primary flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium">{campaign.players}/{campaign.maxPlayers} Jugadores</p>
                       <p className="text-xs text-muted-foreground">Participantes actuales</p>
@@ -160,13 +160,13 @@ const Campaigns = () => {
                 </div>
 
                 {/* Session Info */}
-                <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 flex-shrink-0" />
                     <span>{campaign.sessions} sesiones</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
+                    <MapPin className="w-4 h-4 flex-shrink-0" />
                     <span>Próxima: {new Date(campaign.nextSession).toLocaleDateString('es-ES')}</span>
                   </div>
                 </div>
@@ -177,17 +177,19 @@ const Campaigns = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Button size="sm" className="flex-1 hover-glow bg-primary hover:bg-primary/90">
                     <Play className="w-4 h-4 mr-1" />
                     {campaign.status === 'active' ? 'Continuar' : 'Iniciar'}
                   </Button>
-                  <Button size="sm" variant="outline" className="hover-glow">
-                    <Users className="w-4 h-4" />
-                  </Button>
-                  <Button size="sm" variant="outline" className="hover-glow">
-                    <Calendar className="w-4 h-4" />
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline" className="hover-glow flex-1 sm:flex-none">
+                      <Users className="w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="outline" className="hover-glow flex-1 sm:flex-none">
+                      <Calendar className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -197,10 +199,10 @@ const Campaigns = () => {
         {/* Empty State */}
         {filteredCampaigns.length === 0 && (
           <Card className="glass-effect">
-            <CardContent className="p-12 text-center">
+            <CardContent className="p-8 sm:p-12 text-center">
               <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="font-cinzel font-semibold text-lg mb-2">No se encontraron campañas</h3>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-muted-foreground mb-6 text-sm sm:text-base">
                 {searchTerm ? 'Intenta con un término de búsqueda diferente' : 'Crea tu primera campaña para comenzar'}
               </p>
               <Button className="hover-glow bg-primary hover:bg-primary/90">
