@@ -80,47 +80,47 @@ const Pricing = () => {
     <div className="min-h-screen flex w-full">
       <AppSidebar />
       
-      <main className="flex-1 p-6">
-        <div className="flex items-center gap-4 mb-8">
+      <main className="flex-1 p-3 sm:p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <SidebarTrigger className="hover-glow" />
-          <div className="text-center flex-1">
-            <h1 className="font-cinzel font-bold text-4xl gold-gradient mb-4">
+          <div className="text-center sm:text-left flex-1">
+            <h1 className="font-cinzel font-bold text-2xl sm:text-3xl md:text-4xl gold-gradient mb-2 sm:mb-4">
               Planes de Suscripción
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
               Elige el plan perfecto para tu estilo de juego
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-7xl mx-auto">
           {plans.map((plan, index) => (
-            <Card key={index} className={`glass-effect relative ${plan.popular ? 'ring-2 ring-primary scale-105' : ''} hover-glow transition-all duration-300`}>
+            <Card key={index} className={`glass-effect relative ${plan.popular ? 'ring-2 ring-primary lg:scale-105' : ''} hover-glow transition-all duration-300`}>
               {plan.popular && (
-                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
+                <Badge className="absolute -top-2 sm:-top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground text-xs sm:text-sm">
                   Más Popular
                 </Badge>
               )}
               
-              <CardHeader className="text-center pb-4">
-                <div className={`w-16 h-16 mx-auto rounded-lg flex items-center justify-center mb-4 ${plan.color}`}>
-                  <plan.icon className="w-8 h-8 text-primary" />
+              <CardHeader className="text-center pb-3 sm:pb-4 p-4 sm:p-6">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto rounded-lg flex items-center justify-center mb-3 sm:mb-4 ${plan.color}`}>
+                  <plan.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary" />
                 </div>
-                <CardTitle className="font-cinzel text-2xl">{plan.name}</CardTitle>
+                <CardTitle className="font-cinzel text-xl sm:text-2xl">{plan.name}</CardTitle>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-4xl font-bold gold-gradient">{plan.price}</span>
-                  <span className="text-muted-foreground">{plan.period}</span>
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold gold-gradient">{plan.price}</span>
+                  <span className="text-muted-foreground text-sm sm:text-base">{plan.period}</span>
                 </div>
-                <CardDescription>{plan.description}</CardDescription>
+                <CardDescription className="text-sm sm:text-base">{plan.description}</CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
                 <div>
-                  <h4 className="font-semibold mb-3 text-green-400">✓ Incluye:</h4>
-                  <ul className="space-y-2">
+                  <h4 className="font-semibold mb-2 sm:mb-3 text-green-400 text-sm sm:text-base">✓ Incluye:</h4>
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm">
-                        <Check className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm">
+                        <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -129,11 +129,11 @@ const Pricing = () => {
 
                 {plan.limitations.length > 0 && (
                   <div>
-                    <h4 className="font-semibold mb-3 text-muted-foreground">Limitaciones:</h4>
-                    <ul className="space-y-2">
+                    <h4 className="font-semibold mb-2 sm:mb-3 text-muted-foreground text-sm sm:text-base">Limitaciones:</h4>
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {plan.limitations.map((limitation, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="w-4 h-4 text-center mt-0.5 flex-shrink-0">−</span>
+                        <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
+                          <span className="w-3 h-3 sm:w-4 sm:h-4 text-center mt-0.5 flex-shrink-0">−</span>
                           <span>{limitation}</span>
                         </li>
                       ))}
@@ -142,7 +142,7 @@ const Pricing = () => {
                 )}
 
                 <Button 
-                  className={`w-full hover-glow ${plan.popular ? 'bg-primary hover:bg-primary/90' : ''}`}
+                  className={`w-full hover-glow text-sm sm:text-base ${plan.popular ? 'bg-primary hover:bg-primary/90' : ''}`}
                   variant={plan.popular ? 'default' : 'outline'}
                   size="lg"
                 >
@@ -153,14 +153,14 @@ const Pricing = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-12 sm:mt-16 text-center">
           <Card className="glass-effect max-w-4xl mx-auto">
-            <CardContent className="p-8">
-              <h3 className="font-cinzel font-bold text-2xl mb-4">¿Necesitas algo más?</h3>
-              <p className="text-muted-foreground mb-6">
+            <CardContent className="p-6 sm:p-8">
+              <h3 className="font-cinzel font-bold text-xl sm:text-2xl mb-3 sm:mb-4">¿Necesitas algo más?</h3>
+              <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
                 Contáctanos para planes empresariales o funcionalidades específicas para tu grupo
               </p>
-              <Button variant="outline" className="hover-glow">
+              <Button variant="outline" className="hover-glow text-sm sm:text-base">
                 Contactar Ventas
               </Button>
             </CardContent>

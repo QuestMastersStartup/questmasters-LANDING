@@ -60,30 +60,30 @@ const Dashboard = () => {
     <div className="min-h-screen flex w-full">
       <AppSidebar />
       
-      <main className="flex-1 p-6">
-        <div className="flex items-center gap-4 mb-8">
+      <main className="flex-1 p-3 sm:p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <SidebarTrigger className="hover-glow" />
-          <div>
-            <h1 className="font-cinzel font-bold text-3xl gold-gradient">
+          <div className="text-center sm:text-left flex-1">
+            <h1 className="font-cinzel font-bold text-2xl sm:text-3xl gold-gradient">
               ¡Bienvenido, Aventurero!
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm sm:text-base">
               Administra tus campañas y personajes desde aquí
             </p>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
           <Link to="/chatbot">
             <Card className="glass-effect hover-glow transition-all duration-300 hover:scale-105 cursor-pointer">
-              <CardContent className="flex items-center p-6">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mr-4">
-                  <MessageSquare className="w-6 h-6 text-primary" />
+              <CardContent className="flex flex-col sm:flex-row items-center p-3 sm:p-4 md:p-6 text-center sm:text-left">
+                <div className="w-8 h-8 sm:w-10 md:w-12 sm:h-10 md:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4">
+                  <MessageSquare className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Chatbot DM</h3>
-                  <p className="text-sm text-muted-foreground">Iniciar sesión</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Chatbot DM</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Iniciar sesión</p>
                 </div>
               </CardContent>
             </Card>
@@ -91,13 +91,13 @@ const Dashboard = () => {
 
           <Link to="/characters">
             <Card className="glass-effect hover-glow transition-all duration-300 hover:scale-105 cursor-pointer">
-              <CardContent className="flex items-center p-6">
-                <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mr-4">
-                  <User className="w-6 h-6 text-secondary" />
+              <CardContent className="flex flex-col sm:flex-row items-center p-3 sm:p-4 md:p-6 text-center sm:text-left">
+                <div className="w-8 h-8 sm:w-10 md:w-12 sm:h-10 md:h-12 bg-secondary/20 rounded-lg flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4">
+                  <User className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Personajes</h3>
-                  <p className="text-sm text-muted-foreground">Gestionar fichas</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Personajes</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Gestionar fichas</p>
                 </div>
               </CardContent>
             </Card>
@@ -105,13 +105,13 @@ const Dashboard = () => {
 
           <Link to="/campaigns">
             <Card className="glass-effect hover-glow transition-all duration-300 hover:scale-105 cursor-pointer">
-              <CardContent className="flex items-center p-6">
-                <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mr-4">
-                  <Users className="w-6 h-6 text-accent-foreground" />
+              <CardContent className="flex flex-col sm:flex-row items-center p-3 sm:p-4 md:p-6 text-center sm:text-left">
+                <div className="w-8 h-8 sm:w-10 md:w-12 sm:h-10 md:h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4">
+                  <Users className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 text-accent-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Campañas</h3>
-                  <p className="text-sm text-muted-foreground">Administrar</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Campañas</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Administrar</p>
                 </div>
               </CardContent>
             </Card>
@@ -119,13 +119,13 @@ const Dashboard = () => {
 
           <Link to="/books">
             <Card className="glass-effect hover-glow transition-all duration-300 hover:scale-105 cursor-pointer">
-              <CardContent className="flex items-center p-6">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mr-4">
-                  <BookOpen className="w-6 h-6 text-primary" />
+              <CardContent className="flex flex-col sm:flex-row items-center p-3 sm:p-4 md:p-6 text-center sm:text-left">
+                <div className="w-8 h-8 sm:w-10 md:w-12 sm:h-10 md:h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-2 sm:mb-0 sm:mr-3 md:mr-4">
+                  <BookOpen className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Biblioteca</h3>
-                  <p className="text-sm text-muted-foreground">Explorar</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Biblioteca</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Explorar</p>
                 </div>
               </CardContent>
             </Card>
@@ -133,45 +133,46 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
           {stats.map((stat, index) => (
             <Card key={index} className="glass-effect">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-3 sm:p-4 md:p-6 md:pb-2">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                   {stat.title}
                 </CardTitle>
-                <stat.icon className="w-4 h-4 text-primary" />
+                <stat.icon className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
+              <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
+                <div className="text-xl sm:text-2xl font-bold">{stat.value}</div>
                 <p className="text-xs text-muted-foreground">{stat.description}</p>
                 <div className="flex items-center mt-2 text-xs text-green-400">
                   <TrendingUp className="w-3 h-3 mr-1" />
-                  {stat.trend}
+                  <span className="hidden sm:inline">{stat.trend}</span>
+                  <span className="sm:hidden">+{stat.trend.match(/\+(\d+)/)?.[1] || '0'}</span>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Activity */}
-          <Card className="glass-effect lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="font-cinzel">Actividad Reciente</CardTitle>
-              <CardDescription>
+          <Card className="glass-effect xl:col-span-2">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="font-cinzel text-lg sm:text-xl">Actividad Reciente</CardTitle>
+              <CardDescription className="text-sm">
                 Tus últimas acciones en QuestMasters
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-3 sm:space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
+                  <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-lg bg-muted/50 gap-2 sm:gap-0">
                     <div>
-                      <p className="font-medium">{activity.action}</p>
-                      <p className="text-sm text-muted-foreground">{activity.item}</p>
+                      <p className="font-medium text-sm sm:text-base">{activity.action}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{activity.item}</p>
                     </div>
-                    <span className="text-xs text-muted-foreground">{activity.time}</span>
+                    <span className="text-xs text-muted-foreground self-end sm:self-auto">{activity.time}</span>
                   </div>
                 ))}
               </div>
@@ -180,30 +181,30 @@ const Dashboard = () => {
 
           {/* Quick Start */}
           <Card className="glass-effect">
-            <CardHeader>
-              <CardTitle className="font-cinzel flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-primary" />
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="font-cinzel flex items-center gap-2 text-lg sm:text-xl">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 Inicio Rápido
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 Comienza tu próxima aventura
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
               <Link to="/chatbot">
-                <Button className="w-full justify-start hover-glow bg-primary hover:bg-primary/90">
+                <Button className="w-full justify-start hover-glow bg-primary hover:bg-primary/90 text-sm">
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Consultar al DM
                 </Button>
               </Link>
               <Link to="/characters">
-                <Button variant="outline" className="w-full justify-start hover-glow">
+                <Button variant="outline" className="w-full justify-start hover-glow text-sm">
                   <User className="w-4 h-4 mr-2" />
                   Crear Personaje
                 </Button>
               </Link>
               <Link to="/campaigns">
-                <Button variant="outline" className="w-full justify-start hover-glow">
+                <Button variant="outline" className="w-full justify-start hover-glow text-sm">
                   <Users className="w-4 h-4 mr-2" />
                   Nueva Campaña
                 </Button>
