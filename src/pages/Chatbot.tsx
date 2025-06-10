@@ -5,10 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, Send, Bot, User, Sparkles, Dice6, Map, Scroll, Crown, Settings } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MessageSquare, Send, Bot, User, Info, Crown, Users, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Message {
   id: number;
@@ -22,63 +22,32 @@ const Chatbot = () => {
     {
       id: 1,
       type: 'bot',
-      content: '¡Saludos, aventurero! Soy tu asistente de IA especializado en D&D. Puedo actuar como tu Dungeon Master personal o como asistente para ayudarte con reglas, creación de contenido y gestión de campañas. ¿En qué modo prefieres que trabajemos hoy?',
+      content: '¡Hola! Soy tu asistente general de D&D. Puedo ayudarte con reglas básicas, preguntas generales sobre el juego y resolver dudas rápidas. Para funciones avanzadas como Dungeon Master o Asistente especializado, necesitarás crear una campaña.',
       timestamp: '10:30'
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
-  const [mode, setMode] = useState<'assistant' | 'dm'>('assistant');
-  const [selectedCampaign, setSelectedCampaign] = useState('waterdeep');
 
-  const campaigns = [
-    { id: 'waterdeep', name: 'Los Secretos de Waterdeep', active: true },
-    { id: 'crown', name: 'La Corona Perdida', active: true },
-    { id: 'dragon', name: 'El Dragón del Norte', active: false }
-  ];
-
-  const assistantActions = [
+  const quickActions = [
     {
-      icon: Dice6,
-      text: "Explicar Reglas",
-      prompt: "Explícame cómo funcionan los ataques de oportunidad en D&D 5e"
-    },
-    {
-      icon: Map,
-      text: "Crear Contenido",
-      prompt: "Ayúdame a crear un NPC interesante para mi taberna"
-    },
-    {
-      icon: Scroll,
-      text: "Consulta Rápida",
-      prompt: "¿Cuáles son los componentes del hechizo Bola de Fuego?"
+      icon: MessageSquare,
+      text: "Explicar Reglas Básicas",
+      prompt: "¿Podrías explicarme cómo funciona el sistema de dados en D&D 5e?"
     },
     {
       icon: User,
-      text: "Optimizar Personaje",
-      prompt: "¿Qué multiclase recomendarías para un Guerrero nivel 5?"
-    }
-  ];
-
-  const dmActions = [
-    {
-      icon: Crown,
-      text: "Continuar Historia",
-      prompt: "Continúa la narrativa desde donde la dejamos en la última sesión"
+      text: "Crear Personaje",
+      prompt: "¿Qué pasos debo seguir para crear mi primer personaje?"
     },
     {
-      icon: Dice6,
-      text: "Generar Encuentro",
-      prompt: "Crea un encuentro balanceado para el grupo actual"
+      icon: Bot,
+      text: "Consulta General",
+      prompt: "¿Cuál es la diferencia entre una tirada de ataque y una tirada de salvación?"
     },
     {
-      icon: Map,
-      text: "Describir Ubicación",
-      prompt: "Describe la entrada a las mazmorras ancestrales"
-    },
-    {
-      icon: Scroll,
-      text: "Crear NPC",
-      prompt: "Genera un mercader misterioso con sus propias motivaciones"
+      icon: Sparkles,
+      text: "Consejos para Nuevos",
+      prompt: "Soy nuevo en D&D, ¿qué consejos me darías para empezar?"
     }
   ];
 
@@ -94,14 +63,12 @@ const Chatbot = () => {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // Simulate bot response based on mode
+    // Simulate bot response
     setTimeout(() => {
       const botResponse: Message = {
         id: messages.length + 2,
         type: 'bot',
-        content: mode === 'dm' 
-          ? `*Como DM de "${campaigns.find(c => c.id === selectedCampaign)?.name}"*: Basándome en el contexto actual de tu campaña, puedo ofrecerte lo siguiente...`
-          : '¡Excelente pregunta! Como tu asistente de D&D, te recomiendo lo siguiente...',
+        content: 'Excelente pregunta. Como tu asistente general, puedo ayudarte con información básica sobre D&D. Para respuestas más detalladas y funciones avanzadas como simulación de partidas, te recomiendo crear una campaña donde tendrás acceso al Dungeon Master especializado.',
         timestamp: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, botResponse]);
@@ -113,8 +80,6 @@ const Chatbot = () => {
   const handleQuickAction = (prompt: string) => {
     setInputMessage(prompt);
   };
-
-  const currentActions = mode === 'dm' ? dmActions : assistantActions;
 
   return (
     <div className="min-h-screen flex w-full">
@@ -131,52 +96,33 @@ const Chatbot = () => {
               </div>
               <div className="min-w-0 flex-1">
                 <h1 className="font-cinzel font-bold text-xl sm:text-2xl gold-gradient truncate">
-                  Asistente IA de D&D
+                  Chat General D&D
                 </h1>
                 <p className="text-muted-foreground text-sm">
-                  {mode === 'dm' ? 'Modo Dungeon Master' : 'Modo Asistente'}
+                  Asistente básico para consultas generales
                 </p>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
-              <Tabs value={mode} onValueChange={(value) => setMode(value as 'assistant' | 'dm')} className="w-full sm:w-auto">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="assistant" className="text-xs sm:text-sm">Asistente</TabsTrigger>
-                  <TabsTrigger value="dm" className="text-xs sm:text-sm">DM</TabsTrigger>
-                </TabsList>
-              </Tabs>
-              <Button variant="outline" className="hover-glow w-full sm:w-auto" size="sm">
-                <Settings className="w-4 h-4 sm:mr-2" />
-                <span className="hidden sm:inline">Configurar</span>
-              </Button>
-            </div>
           </div>
+        </div>
+
+        {/* Info Alert */}
+        <div className="p-3 sm:p-4 md:p-6 pb-0">
+          <Alert className="glass-effect border-primary/50">
+            <Info className="h-4 w-4" />
+            <AlertDescription className="text-sm">
+              <strong>¿Necesitas funciones avanzadas?</strong> Para acceder al Dungeon Master especializado, 
+              herramientas de campaña y asistente completo, 
+              <Link to="/campaigns" className="text-primary hover:underline ml-1">
+                crea una campaña aquí
+              </Link>.
+            </AlertDescription>
+          </Alert>
         </div>
 
         <div className="flex-1 flex flex-col lg:flex-row">
           {/* Chat Area */}
           <div className="flex-1 flex flex-col min-h-0">
-            {/* Campaign Selector (DM Mode) */}
-            {mode === 'dm' && (
-              <div className="border-b border-border/50 p-3 sm:p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                  <span className="text-sm font-medium whitespace-nowrap">Campaña Activa:</span>
-                  <div className="flex flex-wrap gap-2">
-                    {campaigns.map((campaign) => (
-                      <Badge
-                        key={campaign.id}
-                        variant={selectedCampaign === campaign.id ? "default" : "outline"}
-                        className={`cursor-pointer hover-glow text-xs ${!campaign.active ? 'opacity-50' : ''}`}
-                        onClick={() => campaign.active && setSelectedCampaign(campaign.id)}
-                      >
-                        {campaign.name}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Messages */}
             <ScrollArea className="flex-1 p-3 sm:p-4 md:p-6">
               <div className="space-y-4 max-w-4xl mx-auto">
@@ -222,14 +168,11 @@ const Chatbot = () => {
             {/* Input Area */}
             <div className="border-t border-border/50 p-3 sm:p-4 md:p-6">
               <div className="max-w-4xl mx-auto">
-                <div className="flex gap-2 mb-4">
+                <div className="flex gap-2">
                   <Input
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
-                    placeholder={mode === 'dm' 
-                      ? "Describe lo que quieres que suceda..." 
-                      : "Escribe tu pregunta sobre D&D..."
-                    }
+                    placeholder="Escribe tu pregunta sobre D&D..."
                     className="flex-1 bg-input border-border/50 focus:border-primary text-sm"
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   />
@@ -251,12 +194,12 @@ const Chatbot = () => {
               <CardHeader className="p-4 sm:p-6">
                 <CardTitle className="font-cinzel flex items-center gap-2 text-lg">
                   <Sparkles className="w-5 h-5 text-primary" />
-                  {mode === 'dm' ? 'Herramientas de DM' : 'Acciones Rápidas'}
+                  Acciones Rápidas
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 p-4 sm:p-6 pt-0">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                  {currentActions.map((action, index) => (
+                  {quickActions.map((action, index) => (
                     <Button
                       key={index}
                       variant="outline"
@@ -271,29 +214,32 @@ const Chatbot = () => {
               </CardContent>
             </Card>
 
-            {mode === 'dm' && (
-              <Card className="glass-effect mt-4 sm:mt-6">
-                <CardHeader className="p-4 sm:p-6">
-                  <CardTitle className="font-cinzel text-sm">Estado de Campaña</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6 pt-0">
-                  <div className="space-y-3 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Sesión Actual:</span>
-                      <span className="font-medium">12</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Jugadores:</span>
-                      <span className="font-medium">4 activos</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Ubicación:</span>
-                      <span className="font-medium">Waterdeep</span>
-                    </div>
+            <Card className="glass-effect mt-4 sm:mt-6">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-sm flex items-center gap-2">
+                  <Crown className="w-4 h-4 text-primary" />
+                  Funciones Avanzadas
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-3 text-xs">
+                  <div className="p-3 bg-muted/50 rounded-lg">
+                    <h4 className="font-medium mb-2 flex items-center gap-2">
+                      <Users className="w-3 h-3" />
+                      Crea una Campaña
+                    </h4>
+                    <p className="text-muted-foreground mb-3">
+                      Accede a herramientas completas de DM, asistente especializado y gestión avanzada.
+                    </p>
+                    <Link to="/campaigns">
+                      <Button size="sm" className="w-full hover-glow bg-primary hover:bg-primary/90">
+                        Crear Campaña
+                      </Button>
+                    </Link>
                   </div>
-                </CardContent>
-              </Card>
-            )}
+                </div>
+              </CardContent>
+            </Card>
 
             <Card className="glass-effect mt-4 sm:mt-6">
               <CardHeader className="p-4 sm:p-6">
@@ -301,21 +247,10 @@ const Chatbot = () => {
               </CardHeader>
               <CardContent className="p-4 sm:p-6 pt-0">
                 <div className="space-y-2 text-xs text-muted-foreground">
-                  {mode === 'dm' ? (
-                    <>
-                      <p>• Mantén el ritmo de la narrativa</p>
-                      <p>• Describe escenas con detalle</p>
-                      <p>• Ajusta la dificultad al grupo</p>
-                      <p>• Fomenta la interpretación</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>• Sé específico en tus preguntas</p>
-                      <p>• Menciona el nivel de los personajes</p>
-                      <p>• Describe el contexto de tu campaña</p>
-                      <p>• Pregunta sobre reglas si tienes dudas</p>
-                    </>
-                  )}
+                  <p>• Sé específico en tus preguntas</p>
+                  <p>• Pregunta sobre reglas básicas</p>
+                  <p>• Consulta sobre creación de personajes</p>
+                  <p>• Pide consejos para comenzar</p>
                 </div>
               </CardContent>
             </Card>

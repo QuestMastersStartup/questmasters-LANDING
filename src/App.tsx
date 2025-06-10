@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Chatbot from "./pages/Chatbot";
 import Characters from "./pages/Characters";
+import CharacterSheet from "./pages/CharacterSheet";
 import Campaigns from "./pages/Campaigns";
 import Books from "./pages/Books";
 import Pricing from "./pages/Pricing";
@@ -53,6 +54,14 @@ const App = () => (
             element={
               <SidebarProvider>
                 <Characters />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/character-sheet" 
+            element={
+              <SidebarProvider>
+                <CharacterSheet />
               </SidebarProvider>
             } 
           />

@@ -3,38 +3,34 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, User, Users, BookOpen, Sparkles, TrendingUp, Clock, Award } from "lucide-react";
+import { MessageSquare, User, Users, BookOpen, Sparkles, Calendar, Clock, MapPin, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const stats = [
+  const upcomingSessions = [
     {
-      title: "Campañas Activas",
-      value: "3",
-      description: "En progreso",
-      icon: Users,
-      trend: "+2 este mes"
+      campaign: "Los Secretos de Waterdeep",
+      date: "2024-01-15",
+      time: "19:00",
+      location: "Discord - Sala Principal",
+      players: 4,
+      status: "confirmada"
     },
     {
-      title: "Personajes",
-      value: "12",
-      description: "Creados",
-      icon: User,
-      trend: "+4 este mes"
+      campaign: "La Corona Perdida", 
+      date: "2024-01-18",
+      time: "20:30",
+      location: "Presencial - Casa de Luis",
+      players: 3,
+      status: "pendiente"
     },
     {
-      title: "Sesiones Jugadas",
-      value: "47",
-      description: "Total",
-      icon: Clock,
-      trend: "+8 esta semana"
-    },
-    {
-      title: "Logros",
-      value: "15",
-      description: "Desbloqueados",
-      icon: Award,
-      trend: "+3 nuevos"
+      campaign: "El Dragón del Norte",
+      date: "2024-01-22",
+      time: "18:00", 
+      location: "Discord - Sala 2",
+      players: 5,
+      status: "confirmada"
     }
   ];
 
@@ -55,6 +51,14 @@ const Dashboard = () => {
       time: "Hace 1 día"
     }
   ];
+
+  const getStatusColor = (status: string) => {
+    return status === 'confirmada' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400';
+  };
+
+  const getStatusText = (status: string) => {
+    return status === 'confirmada' ? 'Confirmada' : 'Pendiente';
+  };
 
   return (
     <div className="min-h-screen flex w-full">
@@ -82,8 +86,8 @@ const Dashboard = () => {
                   <MessageSquare className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm sm:text-base">Chatbot DM</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Iniciar sesión</p>
+                  <h3 className="font-semibold text-sm sm:text-base">Chat General</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Asistente básico</p>
                 </div>
               </CardContent>
             </Card>
@@ -132,28 +136,56 @@ const Dashboard = () => {
           </Link>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
-          {stats.map((stat, index) => (
-            <Card key={index} className="glass-effect">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-3 sm:p-4 md:p-6 md:pb-2">
-                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
-                  {stat.title}
-                </CardTitle>
-                <stat.icon className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-              </CardHeader>
-              <CardContent className="p-3 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
-                <div className="text-xl sm:text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground">{stat.description}</p>
-                <div className="flex items-center mt-2 text-xs text-green-400">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  <span className="hidden sm:inline">{stat.trend}</span>
-                  <span className="sm:hidden">+{stat.trend.match(/\+(\d+)/)?.[1] || '0'}</span>
+        {/* Upcoming Sessions */}
+        <Card className="glass-effect mb-6 sm:mb-8">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="font-cinzel text-lg sm:text-xl flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-primary" />
+              Próximas Sesiones
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Tus sesiones programadas para los próximos días
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-4 sm:p-6 pt-0">
+            <div className="space-y-3 sm:space-y-4">
+              {upcomingSessions.map((session, index) => (
+                <div key={index} className="flex flex-col lg:flex-row lg:items-center justify-between p-3 sm:p-4 rounded-lg bg-muted/50 gap-3 lg:gap-0">
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                      <h4 className="font-medium text-sm sm:text-base">{session.campaign}</h4>
+                      <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(session.status)} w-fit`}>
+                        {getStatusText(session.status)}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs sm:text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {session.date} - {session.time}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {session.location}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-3 h-3" />
+                        {session.players} jugadores
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 mt-2 lg:mt-0">
+                    <Button size="sm" variant="outline" className="hover-glow text-xs">
+                      Ver Detalles
+                    </Button>
+                    <Button size="sm" className="hover-glow bg-primary hover:bg-primary/90 text-xs">
+                      Unirse
+                    </Button>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
           {/* Recent Activity */}
@@ -194,7 +226,7 @@ const Dashboard = () => {
               <Link to="/chatbot">
                 <Button className="w-full justify-start hover-glow bg-primary hover:bg-primary/90 text-sm">
                   <MessageSquare className="w-4 h-4 mr-2" />
-                  Consultar al DM
+                  Chat General
                 </Button>
               </Link>
               <Link to="/characters">
@@ -205,7 +237,7 @@ const Dashboard = () => {
               </Link>
               <Link to="/campaigns">
                 <Button variant="outline" className="w-full justify-start hover-glow text-sm">
-                  <Users className="w-4 h-4 mr-2" />
+                  <Crown className="w-4 h-4 mr-2" />
                   Nueva Campaña
                 </Button>
               </Link>
