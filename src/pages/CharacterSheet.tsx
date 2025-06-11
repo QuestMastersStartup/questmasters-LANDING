@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Edit, Shield, Sword, Heart, Zap, Eye, Brain, Dumbbell, Feather, MessageSquare, Users, Target, Coins } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, Edit, Shield, Sword, Heart, Zap, Eye, Brain, Dumbbell, Feather, MessageSquare, Users, Target, Coins, User, Scroll, Plus, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CharacterSheet = () => {
@@ -125,6 +126,45 @@ const CharacterSheet = () => {
     flaws: "Mi orgullo a veces me mete en problemas."
   };
 
+  const spellcasting = {
+    spellcastingClass: "Paladín",
+    spellcastingAbility: "Carisma",
+    spellSaveDC: 11,
+    spellAttackBonus: 3
+  };
+
+  const spells = {
+    cantrips: [
+      { name: "Luz", description: "Crea una luz brillante en un objeto" },
+      { name: "Reparar", description: "Repara un objeto roto simple" }
+    ],
+    level1: [
+      { name: "Curar Heridas", description: "Restaura 1d8+3 puntos de vida", prepared: true },
+      { name: "Detectar Mal y Bien", description: "Detecta presencias celestiales, demoniacas o no muertas", prepared: false }
+    ],
+    level2: [
+      { name: "Ayuda", description: "Otorga ventaja en una tirada", prepared: true }
+    ]
+  };
+
+  const backgroundInfo = {
+    appearance: {
+      age: "45 años",
+      height: "1.35m",
+      weight: "75kg",
+      eyes: "Marrones",
+      skin: "Bronceada",
+      hair: "Negro con canas"
+    },
+    backstory: "Thorin sirvió durante décadas en las fuerzas militares del reino enano. Su experiencia en batalla lo convirtió en un líder natural y un estratega respetado. Tras retirarse del servicio activo, decidió aventurarse por el mundo en busca de nuevos desafíos.",
+    allies: [
+      { name: "Hermandad de Acero", description: "Organización militar enana", symbol: "⚔️" },
+      { name: "Gremio de Herreros", description: "Asociación de artesanos", symbol: "🔨" }
+    ],
+    additionalFeatures: "Resistencia al veneno heredada de su linaje enano. Conocimiento profundo de tácticas militares y forjado de armas.",
+    treasure: "Anillo familiar con el sello del clan Martillo de Hierro. Mapa antiguo de las minas perdidas de Khaz Modan."
+  };
+
   const formatModifier = (modifier: number) => {
     return modifier >= 0 ? `+${modifier}` : `${modifier}`;
   };
@@ -153,10 +193,20 @@ const CharacterSheet = () => {
               Nivel {character.level} {character.race} {character.class}
             </p>
           </div>
-          <Button className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto">
-            <Edit className="w-4 h-4 mr-2" />
-            Editar Personaje
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" className="hover-glow">
+              <User className="w-4 h-4 mr-2" />
+              Transfondo
+            </Button>
+            <Button variant="outline" className="hover-glow">
+              <Scroll className="w-4 h-4 mr-2" />
+              Conjuros
+            </Button>
+            <Button className="hover-glow bg-primary hover:bg-primary/90">
+              <Edit className="w-4 h-4 mr-2" />
+              Editar
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -274,6 +324,33 @@ const CharacterSheet = () => {
                       <div className="w-4 h-4 border-2 border-red-400 rounded-full"></div>
                       <div className="w-4 h-4 border-2 border-red-400 rounded-full"></div>
                     </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Other Proficiencies & Languages */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg">Otras Competencias e Idiomas</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Idiomas</h4>
+                    <p className="text-sm text-muted-foreground">Común, Enano</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Competencias con Armaduras</h4>
+                    <p className="text-sm text-muted-foreground">Todas las armaduras, escudos</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Competencias con Armas</h4>
+                    <p className="text-sm text-muted-foreground">Armas simples, marciales</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Herramientas</h4>
+                    <p className="text-sm text-muted-foreground">Herramientas de herrero, vehículos terrestres</p>
                   </div>
                 </div>
               </CardContent>
@@ -453,28 +530,220 @@ const CharacterSheet = () => {
               </CardContent>
             </Card>
 
-            {/* Other Proficiencies & Languages */}
+            {/* Background Section */}
             <Card className="glass-effect">
               <CardHeader className="p-4 sm:p-6">
-                <CardTitle className="font-cinzel text-base sm:text-lg">Otras Competencias e Idiomas</CardTitle>
+                <CardTitle className="font-cinzel text-base sm:text-lg flex items-center gap-2">
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Transfondo
+                </CardTitle>
               </CardHeader>
               <CardContent className="p-4 sm:p-6 pt-0">
-                <div className="space-y-3">
+                <div className="space-y-6">
+                  {/* Appearance */}
                   <div>
-                    <h4 className="font-medium text-sm mb-2">Idiomas</h4>
-                    <p className="text-sm text-muted-foreground">Común, Enano</p>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-sm">Apariencia</h4>
+                      <Button variant="outline" size="sm">
+                        <Upload className="w-4 h-4 mr-2" />
+                        Subir Foto
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Edad</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.age}</p>
+                      </div>
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Altura</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.height}</p>
+                      </div>
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Peso</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.weight}</p>
+                      </div>
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Ojos</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.eyes}</p>
+                      </div>
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Piel</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.skin}</p>
+                      </div>
+                      <div className="bg-muted/50 p-3 rounded">
+                        <p className="text-xs text-muted-foreground">Cabello</p>
+                        <p className="text-sm font-medium">{backgroundInfo.appearance.hair}</p>
+                      </div>
+                    </div>
                   </div>
+
+                  <Separator />
+
+                  {/* Backstory */}
                   <div>
-                    <h4 className="font-medium text-sm mb-2">Competencias con Armaduras</h4>
-                    <p className="text-sm text-muted-foreground">Armaduras ligeras, medianas y pesadas, escudos</p>
+                    <h4 className="font-medium text-sm mb-2">Historia</h4>
+                    <Textarea 
+                      className="bg-muted/50 border-none resize-none" 
+                      defaultValue={backgroundInfo.backstory}
+                      rows={4}
+                    />
                   </div>
+
+                  <Separator />
+
+                  {/* Allies & Organizations */}
                   <div>
-                    <h4 className="font-medium text-sm mb-2">Competencias con Armas</h4>
-                    <p className="text-sm text-muted-foreground">Armas simples, armas marciales</p>
+                    <h4 className="font-medium text-sm mb-3">Aliados y Organizaciones</h4>
+                    <div className="space-y-3">
+                      {backgroundInfo.allies.map((ally, index) => (
+                        <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded">
+                          <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center text-lg">
+                            {ally.symbol}
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">{ally.name}</p>
+                            <p className="text-xs text-muted-foreground">{ally.description}</p>
+                          </div>
+                          <Button variant="ghost" size="sm">
+                            <Upload className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+
+                  <Separator />
+
+                  {/* Additional Features */}
                   <div>
-                    <h4 className="font-medium text-sm mb-2">Competencias con Herramientas</h4>
-                    <p className="text-sm text-muted-foreground">Herramientas de herrero, vehículos terrestres</p>
+                    <h4 className="font-medium text-sm mb-2">Rasgos y Atributos Adicionales</h4>
+                    <Textarea 
+                      className="bg-muted/50 border-none resize-none" 
+                      defaultValue={backgroundInfo.additionalFeatures}
+                      rows={3}
+                    />
+                  </div>
+
+                  <Separator />
+
+                  {/* Treasure */}
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Tesoro</h4>
+                    <Textarea 
+                      className="bg-muted/50 border-none resize-none" 
+                      defaultValue={backgroundInfo.treasure}
+                      rows={3}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Spells Section */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg flex items-center gap-2">
+                  <Scroll className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Conjuros
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-6">
+                  {/* Spellcasting Info */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="bg-muted/50 p-3 rounded text-center">
+                      <p className="text-xs text-muted-foreground">Clase de Lanzador</p>
+                      <p className="text-sm font-medium">{spellcasting.spellcastingClass}</p>
+                    </div>
+                    <div className="bg-muted/50 p-3 rounded text-center">
+                      <p className="text-xs text-muted-foreground">Característica</p>
+                      <p className="text-sm font-medium">{spellcasting.spellcastingAbility}</p>
+                    </div>
+                    <div className="bg-muted/50 p-3 rounded text-center">
+                      <p className="text-xs text-muted-foreground">CD de Salvación</p>
+                      <p className="text-sm font-medium">{spellcasting.spellSaveDC}</p>
+                    </div>
+                    <div className="bg-muted/50 p-3 rounded text-center">
+                      <p className="text-xs text-muted-foreground">Bonif. Ataque</p>
+                      <p className="text-sm font-medium">+{spellcasting.spellAttackBonus}</p>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Cantrips */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-sm">Trucos (Nivel 0)</h4>
+                      <Button variant="outline" size="sm">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Agregar
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {spells.cantrips.map((spell, index) => (
+                        <div key={index} className="p-3 bg-muted/50 rounded">
+                          <p className="font-medium text-sm">{spell.name}</p>
+                          <p className="text-xs text-muted-foreground">{spell.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Level 1 Spells */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-sm">Conjuros de Nivel 1</h4>
+                      <Button variant="outline" size="sm">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Agregar
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {spells.level1.map((spell, index) => (
+                        <div key={index} className="p-3 bg-muted/50 rounded flex items-start gap-3">
+                          <input 
+                            type="checkbox" 
+                            defaultChecked={spell.prepared}
+                            className="mt-1"
+                          />
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">{spell.name}</p>
+                            <p className="text-xs text-muted-foreground">{spell.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Level 2 Spells */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-sm">Conjuros de Nivel 2</h4>
+                      <Button variant="outline" size="sm">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Agregar
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {spells.level2.map((spell, index) => (
+                        <div key={index} className="p-3 bg-muted/50 rounded flex items-start gap-3">
+                          <input 
+                            type="checkbox" 
+                            defaultChecked={spell.prepared}
+                            className="mt-1"
+                          />
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">{spell.name}</p>
+                            <p className="text-xs text-muted-foreground">{spell.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -487,3 +756,5 @@ const CharacterSheet = () => {
 };
 
 export default CharacterSheet;
+
+</edits_to_apply>
