@@ -108,10 +108,12 @@ const Characters = () => {
               Administra las fichas de tus personajes de D&D
             </p>
           </div>
-          <Button className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto">
-            <Plus className="w-4 h-4 mr-2" />
-            Nuevo Personaje
-          </Button>
+          <Link to="/character-creation">
+            <Button className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto">
+              <Plus className="w-4 h-4 mr-2" />
+              Nuevo Personaje
+            </Button>
+          </Link>
         </div>
 
         {/* Search and Filter */}
@@ -240,10 +242,12 @@ const Characters = () => {
               <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
                 {searchTerm ? 'Intenta con un término de búsqueda diferente' : 'Crea tu primer personaje para comenzar'}
               </p>
-              <Button className="hover-glow bg-primary hover:bg-primary/90">
-                <Plus className="w-4 h-4 mr-2" />
-                Crear Personaje
-              </Button>
+              <Link to="/character-creation">
+                <Button className="hover-glow bg-primary hover:bg-primary/90">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Crear Personaje
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         )}
