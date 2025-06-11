@@ -1,11 +1,11 @@
-
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Edit, Shield, Sword, Heart, Zap, Eye, Brain, Dumbbell, Feather, MessageSquare, Users } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, Edit, Shield, Sword, Heart, Zap, Eye, Brain, Dumbbell, Feather, MessageSquare, Users, Target, Coins } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CharacterSheet = () => {
@@ -20,12 +20,16 @@ const CharacterSheet = () => {
     maxExperience: 48000,
     hp: 68,
     maxHp: 75,
+    tempHp: 0,
     ac: 18,
+    initiative: 1,
     speed: 25,
     proficiencyBonus: 3,
     avatar: "🛡️",
     hitDice: "8d10",
-    campaign: "Los Secretos de Waterdeep"
+    campaign: "Los Secretos de Waterdeep",
+    passivePerception: 14,
+    inspiration: 0
   };
 
   const abilities = [
@@ -46,11 +50,46 @@ const CharacterSheet = () => {
     { name: "Carisma", value: -1, proficient: false }
   ];
 
-  const skills = [
+  const allSkills = [
+    { name: "Acrobacias", ability: "DES", value: 1, proficient: false },
+    { name: "Arcanos", ability: "INT", value: 0, proficient: false },
     { name: "Atletismo", ability: "FUE", value: 6, proficient: true },
+    { name: "Engaño", ability: "CAR", value: -1, proficient: false },
+    { name: "Historia", ability: "INT", value: 0, proficient: false },
     { name: "Intimidación", ability: "CAR", value: 2, proficient: true },
+    { name: "Interpretación", ability: "CAR", value: -1, proficient: false },
+    { name: "Investigación", ability: "INT", value: 0, proficient: false },
+    { name: "Juego de Manos", ability: "DES", value: 1, proficient: false },
+    { name: "Medicina", ability: "SAB", value: 1, proficient: false },
+    { name: "Naturaleza", ability: "INT", value: 0, proficient: false },
     { name: "Percepción", ability: "SAB", value: 4, proficient: true },
-    { name: "Supervivencia", ability: "SAB", value: 1, proficient: false }
+    { name: "Perspicacia", ability: "SAB", value: 1, proficient: false },
+    { name: "Persuasión", ability: "CAR", value: -1, proficient: false },
+    { name: "Religión", ability: "INT", value: 0, proficient: false },
+    { name: "Sigilo", ability: "DES", value: 1, proficient: false },
+    { name: "Supervivencia", ability: "SAB", value: 1, proficient: false },
+    { name: "Trato con Animales", ability: "SAB", value: 1, proficient: false }
+  ];
+
+  const attacks = [
+    {
+      name: "Martillo de Guerra +1",
+      atkBonus: "+8",
+      damage: "1d8+4 contundente"
+    },
+    {
+      name: "Jabalina",
+      atkBonus: "+6",
+      damage: "1d6+3 perforante"
+    }
+  ];
+
+  const currencies = [
+    { name: "PC", value: 12 },
+    { name: "PP", value: 8 },
+    { name: "PE", value: 15 },
+    { name: "PO", value: 50 },
+    { name: "PPT", value: 2 }
   ];
 
   const equipment = [
@@ -59,7 +98,9 @@ const CharacterSheet = () => {
     "Escudo",
     "Jabalinas (5)",
     "Kit de Soldado",
-    "50 monedas de oro"
+    "Cuerda de cáñamo (50 pies)",
+    "Raciones de viaje (10 días)",
+    "Yesca y pedernal"
   ];
 
   const features = [
@@ -76,6 +117,13 @@ const CharacterSheet = () => {
       description: "Ventaja en tiradas de salvación contra veneno."
     }
   ];
+
+  const personalityTraits = {
+    traits: "Siempre mantengo mi palabra y defiendo a mis compañeros.",
+    ideals: "Honor. Actúo con honor y respeto hacia mis aliados.",
+    bonds: "Mi martillo familiar es mi posesión más preciada.",
+    flaws: "Mi orgullo a veces me mete en problemas."
+  };
 
   const formatModifier = (modifier: number) => {
     return modifier >= 0 ? `+${modifier}` : `${modifier}`;
@@ -112,7 +160,7 @@ const CharacterSheet = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 sm:gap-6">
-          {/* Character Info */}
+          {/* Left Column - Character Info */}
           <div className="xl:col-span-1 space-y-4 sm:space-y-6">
             {/* Basic Info */}
             <Card className="glass-effect">
@@ -140,8 +188,8 @@ const CharacterSheet = () => {
                     <span className="font-medium">{character.level}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Campaña:</span>
-                    <span className="font-medium text-xs">{character.campaign}</span>
+                    <span className="text-muted-foreground">Experiencia:</span>
+                    <span className="font-medium">{character.experience.toLocaleString()}</span>
                   </div>
                 </div>
               </CardContent>
@@ -156,22 +204,76 @@ const CharacterSheet = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 sm:p-6 pt-0">
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  <div className="text-center p-3 bg-muted/50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Puntos de Vida</p>
-                    <p className="text-lg sm:text-xl font-bold text-red-400">{character.hp}/{character.maxHp}</p>
+                <div className="space-y-3">
+                  {/* HP */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">PV Actuales</p>
+                      <Input className="text-center text-lg font-bold bg-transparent border-none p-0 h-auto" defaultValue={character.hp} />
+                    </div>
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">PV Máximos</p>
+                      <p className="text-lg font-bold">{character.maxHp}</p>
+                    </div>
                   </div>
+                  
                   <div className="text-center p-3 bg-muted/50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Clase de Armadura</p>
-                    <p className="text-lg sm:text-xl font-bold">{character.ac}</p>
+                    <p className="text-xs text-muted-foreground">PV Temporales</p>
+                    <Input className="text-center text-lg font-bold bg-transparent border-none p-0 h-auto" defaultValue={character.tempHp} />
                   </div>
-                  <div className="text-center p-3 bg-muted/50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Velocidad</p>
-                    <p className="text-lg sm:text-xl font-bold">{character.speed} pies</p>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">CA</p>
+                      <p className="text-lg font-bold">{character.ac}</p>
+                    </div>
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">Iniciativa</p>
+                      <p className="text-lg font-bold">{formatModifier(character.initiative)}</p>
+                    </div>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">Velocidad</p>
+                      <p className="text-lg font-bold">{character.speed}</p>
+                    </div>
+                    <div className="text-center p-3 bg-muted/50 rounded-lg">
+                      <p className="text-xs text-muted-foreground">Bonif. Comp.</p>
+                      <p className="text-lg font-bold">+{character.proficiencyBonus}</p>
+                    </div>
+                  </div>
+
                   <div className="text-center p-3 bg-muted/50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Bonif. Competencia</p>
-                    <p className="text-lg sm:text-xl font-bold">+{character.proficiencyBonus}</p>
+                    <p className="text-xs text-muted-foreground">Percepción Pasiva</p>
+                    <p className="text-lg font-bold">{character.passivePerception}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Death Saves */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg">Salvaciones de Muerte</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Éxitos</p>
+                    <div className="flex gap-2">
+                      <div className="w-4 h-4 border-2 border-green-400 rounded-full"></div>
+                      <div className="w-4 h-4 border-2 border-green-400 rounded-full"></div>
+                      <div className="w-4 h-4 border-2 border-green-400 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Fallos</p>
+                    <div className="flex gap-2">
+                      <div className="w-4 h-4 border-2 border-red-400 rounded-full"></div>
+                      <div className="w-4 h-4 border-2 border-red-400 rounded-full"></div>
+                      <div className="w-4 h-4 border-2 border-red-400 rounded-full"></div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -226,12 +328,12 @@ const CharacterSheet = () => {
                   <CardTitle className="font-cinzel text-base sm:text-lg">Habilidades</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4 sm:p-6 pt-0">
-                  <div className="space-y-2">
-                    {skills.map((skill) => (
-                      <div key={skill.name} className="flex items-center justify-between p-2 bg-muted/50 rounded">
+                  <div className="space-y-1 max-h-64 overflow-y-auto">
+                    {allSkills.map((skill) => (
+                      <div key={skill.name} className="flex items-center justify-between p-1 bg-muted/50 rounded text-sm">
                         <div className="flex items-center gap-2">
                           {skill.proficient && <div className="w-2 h-2 bg-primary rounded-full"></div>}
-                          <span className="text-sm">{skill.name}</span>
+                          <span>{skill.name}</span>
                           <span className="text-xs text-muted-foreground">({skill.ability})</span>
                         </div>
                         <span className="font-medium">{formatModifier(skill.value)}</span>
@@ -242,8 +344,70 @@ const CharacterSheet = () => {
               </Card>
             </div>
 
+            {/* Attacks & Spellcasting */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg flex items-center gap-2">
+                  <Target className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Ataques y Conjuros
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-3">
+                  {attacks.map((attack, index) => (
+                    <div key={index} className="grid grid-cols-3 gap-3 p-3 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="text-xs text-muted-foreground">Nombre</p>
+                        <p className="font-medium text-sm">{attack.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Bonif. Ataque</p>
+                        <p className="font-medium text-sm">{attack.atkBonus}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Daño/Tipo</p>
+                        <p className="font-medium text-sm">{attack.damage}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              {/* Features */}
+              {/* Equipment & Money */}
+              <Card className="glass-effect">
+                <CardHeader className="p-4 sm:p-6">
+                  <CardTitle className="font-cinzel text-base sm:text-lg flex items-center gap-2">
+                    <Coins className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Equipamiento y Monedas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 sm:p-6 pt-0">
+                  {/* Currencies */}
+                  <div className="grid grid-cols-5 gap-2 mb-4">
+                    {currencies.map((currency) => (
+                      <div key={currency.name} className="text-center p-2 bg-muted/50 rounded">
+                        <p className="text-xs text-muted-foreground">{currency.name}</p>
+                        <Input className="text-center text-sm font-bold bg-transparent border-none p-0 h-auto" defaultValue={currency.value} />
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Separator className="my-4" />
+                  
+                  {/* Equipment List */}
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {equipment.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2 p-2 bg-muted/50 rounded">
+                        <span className="text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Features & Traits */}
               <Card className="glass-effect">
                 <CardHeader className="p-4 sm:p-6">
                   <CardTitle className="font-cinzel text-base sm:text-lg">Características y Rasgos</CardTitle>
@@ -260,24 +424,61 @@ const CharacterSheet = () => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Equipment */}
-              <Card className="glass-effect">
-                <CardHeader className="p-4 sm:p-6">
-                  <CardTitle className="font-cinzel text-base sm:text-lg">Equipamiento</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6 pt-0">
-                  <div className="space-y-2">
-                    {equipment.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2 p-2 bg-muted/50 rounded">
-                        <Sword className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
-                        <span className="text-sm">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
             </div>
+
+            {/* Personality Traits */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg">Rasgos de Personalidad</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Rasgos de Personalidad</h4>
+                    <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">{personalityTraits.traits}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Ideales</h4>
+                    <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">{personalityTraits.ideals}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Vínculos</h4>
+                    <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">{personalityTraits.bonds}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Defectos</h4>
+                    <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">{personalityTraits.flaws}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Other Proficiencies & Languages */}
+            <Card className="glass-effect">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="font-cinzel text-base sm:text-lg">Otras Competencias e Idiomas</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 sm:p-6 pt-0">
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Idiomas</h4>
+                    <p className="text-sm text-muted-foreground">Común, Enano</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Competencias con Armaduras</h4>
+                    <p className="text-sm text-muted-foreground">Armaduras ligeras, medianas y pesadas, escudos</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Competencias con Armas</h4>
+                    <p className="text-sm text-muted-foreground">Armas simples, armas marciales</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Competencias con Herramientas</h4>
+                    <p className="text-sm text-muted-foreground">Herramientas de herrero, vehículos terrestres</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>
