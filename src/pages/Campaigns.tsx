@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Users, Plus, Search, Edit, Trash2, Calendar, MapPin, Play } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Campaign {
   id: number;
@@ -21,6 +22,7 @@ interface Campaign {
 }
 
 const Campaigns = () => {
+  const navigate = useNavigate();
   const [campaigns] = useState<Campaign[]>([
     {
       id: 1,
@@ -178,9 +180,13 @@ const Campaigns = () => {
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-2">
-                  <Button size="sm" className="flex-1 hover-glow bg-primary hover:bg-primary/90">
+                  <Button 
+                    size="sm" 
+                    className="flex-1 hover-glow bg-primary hover:bg-primary/90"
+                    onClick={() => navigate(`/campaigns/${campaign.id}`)}
+                  >
                     <Play className="w-4 h-4 mr-1" />
-                    {campaign.status === 'active' ? 'Continuar' : 'Iniciar'}
+                    {campaign.status === 'active' ? 'Ver Detalles' : 'Iniciar'}
                   </Button>
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" className="hover-glow flex-1 sm:flex-none">

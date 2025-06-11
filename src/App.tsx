@@ -14,6 +14,7 @@ import Chatbot from "./pages/Chatbot";
 import Characters from "./pages/Characters";
 import CharacterSheet from "./pages/CharacterSheet";
 import Campaigns from "./pages/Campaigns";
+import CampaignDetails from "./pages/CampaignDetails";
 import Books from "./pages/Books";
 import Pricing from "./pages/Pricing";
 import Board2D from "./pages/Board2D";
@@ -70,6 +71,14 @@ const App = () => (
             element={
               <SidebarProvider>
                 <Campaigns />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/campaigns/:id" 
+            element={
+              <SidebarProvider>
+                <CampaignDetails />
               </SidebarProvider>
             } 
           />
