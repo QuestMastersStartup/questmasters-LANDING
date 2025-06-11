@@ -756,5 +756,3 @@ const CharacterSheet = () => {
 };
 
 export default CharacterSheet;
-
-</edits_to_apply>
