@@ -19,20 +19,20 @@
     --primary: 45 100% 51%;
     --primary-foreground: 218 27% 8%;
 
-    --secondary: 218 35% 18%;
+    --secondary: 263 70% 15%;
     --secondary-foreground: 45 100% 85%;
 
     --muted: 218 27% 15%;
     --muted-foreground: 45 20% 65%;
 
-    --accent: 218 35% 22%;
+    --accent: 263 70% 20%;
     --accent-foreground: 45 100% 85%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 218 27% 20%;
-    --input: 218 27% 16%;
+    --input: 218 27% 18%;
     --ring: 45 100% 51%;
 
     --radius: 0.75rem;
@@ -56,9 +56,9 @@
   body {
     @apply bg-background text-foreground font-sans;
     background-image: 
-      radial-gradient(circle at 20% 80%, rgba(70, 130, 180, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(100, 149, 237, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(65, 105, 225, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 20% 80%, rgba(120, 53, 15, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
   }
 
   .font-cinzel {
@@ -91,7 +91,7 @@
     position: absolute;
     inset: 0;
     padding: 2px;
-    background: linear-gradient(45deg, #FFD700, #FF8C00, #4682B4);
+    background: linear-gradient(45deg, #FFD700, #FF8C00, #4B0082);
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
