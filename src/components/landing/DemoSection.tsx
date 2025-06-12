@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export const DemoSection = () => {
   return (
-    <section className="py-20 px-6 golden-dust">
+    <section className="py-20 px-6">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-cinzel font-bold text-4xl mb-4 gold-gradient">

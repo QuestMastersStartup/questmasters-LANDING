@@ -5,7 +5,7 @@ import { Rocket, Play } from "lucide-react";
 
 export const HeroSection = () => {
   return (
-    <section className="pt-24 pb-20 px-6 golden-dust">
+    <section className="pt-24 pb-20 px-6">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Contenido principal */}
