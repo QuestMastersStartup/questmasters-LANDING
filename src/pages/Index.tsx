@@ -13,7 +13,8 @@ import { Footer } from "@/components/landing/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen golden-dust">
+    <div className="min-h-screen relative">
+      <div className="golden-rain"></div>
       <Navigation />
       <HeroSection />
       <ProblemSolutionSection />

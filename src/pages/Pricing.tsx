@@ -1,4 +1,3 @@
-
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +31,7 @@ const Pricing = () => {
     },
     {
       name: "Básico",
-      price: "$9.99",
+      price: "$4.99",
       period: "/mes",
       description: "Para aventureros dedicados",
       icon: Star,
@@ -55,7 +54,7 @@ const Pricing = () => {
     },
     {
       name: "Completo",
-      price: "$19.99",
+      price: "$24.99",
       period: "/mes",
       description: "Para Dungeon Masters profesionales",
       icon: Crown,

@@ -1,11 +1,13 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="pt-24 pb-20 px-6">
+    <section className="pt-24 pb-20 px-6 relative z-10">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Contenido principal */}
@@ -35,7 +37,12 @@ export const HeroSection = () => {
                 <Rocket className="w-5 h-5 mr-2" />
                 Acceso Directo
               </Button>
-              <Button size="lg" variant="outline" className="hover-glow text-lg px-8 py-6">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="hover-glow text-lg px-8 py-6"
+                onClick={() => navigate('/dashboard')}
+              >
                 <Play className="w-5 h-5 mr-2" />
                 Ver Demo
               </Button>

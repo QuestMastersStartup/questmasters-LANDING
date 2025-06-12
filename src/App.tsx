@@ -16,6 +16,7 @@ import CharacterCreation from "./pages/CharacterCreation";
 import CharacterSheet from "./pages/CharacterSheet";
 import Campaigns from "./pages/Campaigns";
 import CampaignDetails from "./pages/CampaignDetails";
+import CampaignCreation from "./pages/CampaignCreation";
 import Books from "./pages/Books";
 import Pricing from "./pages/Pricing";
 import Board2D from "./pages/Board2D";
@@ -88,6 +89,14 @@ const App = () => (
             element={
               <SidebarProvider>
                 <CampaignDetails />
+              </SidebarProvider>
+            } 
+          />
+          <Route 
+            path="/campaign-creation" 
+            element={
+              <SidebarProvider>
+                <CampaignCreation />
               </SidebarProvider>
             } 
           />

@@ -99,7 +99,10 @@ const Campaigns = () => {
               Administra y organiza tus campañas de D&D
             </p>
           </div>
-          <Button className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto">
+          <Button 
+            className="hover-glow bg-primary hover:bg-primary/90 w-full sm:w-auto"
+            onClick={() => navigate('/campaign-creation')}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Nueva Campaña
           </Button>
@@ -211,7 +214,10 @@ const Campaigns = () => {
               <p className="text-muted-foreground mb-6 text-sm sm:text-base">
                 {searchTerm ? 'Intenta con un término de búsqueda diferente' : 'Crea tu primera campaña para comenzar'}
               </p>
-              <Button className="hover-glow bg-primary hover:bg-primary/90">
+              <Button 
+                className="hover-glow bg-primary hover:bg-primary/90"
+                onClick={() => navigate('/campaign-creation')}
+              >
                 <Plus className="w-4 h-4 mr-2" />
                 Crear Campaña
               </Button>

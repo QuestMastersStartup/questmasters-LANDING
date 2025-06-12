@@ -7,43 +7,43 @@
 
 @layer base {
   :root {
-    --background: 218 27% 8%;
+    --background: 210 40% 12%;
     --foreground: 45 100% 85%;
 
-    --card: 218 27% 12%;
+    --card: 210 40% 16%;
     --card-foreground: 45 100% 85%;
 
-    --popover: 218 27% 12%;
+    --popover: 210 40% 16%;
     --popover-foreground: 45 100% 85%;
 
     --primary: 45 100% 51%;
-    --primary-foreground: 218 27% 8%;
+    --primary-foreground: 210 40% 12%;
 
-    --secondary: 263 70% 15%;
+    --secondary: 210 50% 25%;
     --secondary-foreground: 45 100% 85%;
 
-    --muted: 218 27% 15%;
+    --muted: 210 40% 20%;
     --muted-foreground: 45 20% 65%;
 
-    --accent: 263 70% 20%;
+    --accent: 263 70% 25%;
     --accent-foreground: 45 100% 85%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 218 27% 20%;
-    --input: 218 27% 18%;
+    --border: 210 40% 25%;
+    --input: 210 40% 22%;
     --ring: 45 100% 51%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 218 27% 8%;
+    --sidebar-background: 210 40% 12%;
     --sidebar-foreground: 45 100% 85%;
     --sidebar-primary: 45 100% 51%;
-    --sidebar-primary-foreground: 218 27% 8%;
-    --sidebar-accent: 218 27% 12%;
+    --sidebar-primary-foreground: 210 40% 12%;
+    --sidebar-accent: 210 40% 16%;
     --sidebar-accent-foreground: 45 100% 85%;
-    --sidebar-border: 218 27% 20%;
+    --sidebar-border: 210 40% 25%;
     --sidebar-ring: 45 100% 51%;
   }
 }
@@ -56,9 +56,9 @@
   body {
     @apply bg-background text-foreground font-sans;
     background-image: 
-      radial-gradient(circle at 20% 80%, rgba(120, 53, 15, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 20% 80%, rgba(70, 130, 180, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(100, 149, 237, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.12) 0%, transparent 50%);
   }
 
   .font-cinzel {
@@ -91,43 +91,53 @@
     position: absolute;
     inset: 0;
     padding: 2px;
-    background: linear-gradient(45deg, #FFD700, #FF8C00, #4B0082);
+    background: linear-gradient(45deg, #FFD700, #FF8C00, #8A2BE2);
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
   }
 
-  .golden-dust {
-    position: relative;
+  .golden-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
     overflow: hidden;
   }
 
-  .golden-dust::before {
+  .golden-rain::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -100px;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: calc(100% + 200px);
     background-image: 
-      radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.8), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.6), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
-      radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.7), transparent),
-      radial-gradient(2px 2px at 160px 30px, rgba(255, 215, 0, 0.5), transparent),
-      radial-gradient(1px 1px at 200px 90px, rgba(255, 215, 0, 0.6), transparent),
-      radial-gradient(2px 2px at 250px 50px, rgba(255, 215, 0, 0.4), transparent),
-      radial-gradient(1px 1px at 300px 20px, rgba(255, 215, 0, 0.8), transparent);
+      radial-gradient(1px 1px at 10px 20px, rgba(255, 215, 0, 0.8), transparent),
+      radial-gradient(1px 1px at 50px 60px, rgba(255, 215, 0, 0.6), transparent),
+      radial-gradient(1px 1px at 120px 30px, rgba(255, 215, 0, 0.4), transparent),
+      radial-gradient(1px 1px at 180px 90px, rgba(255, 215, 0, 0.7), transparent),
+      radial-gradient(1px 1px at 250px 40px, rgba(255, 215, 0, 0.5), transparent),
+      radial-gradient(1px 1px at 320px 80px, rgba(255, 215, 0, 0.6), transparent),
+      radial-gradient(1px 1px at 380px 20px, rgba(255, 215, 0, 0.4), transparent),
+      radial-gradient(1px 1px at 450px 70px, rgba(255, 215, 0, 0.8), transparent),
+      radial-gradient(1px 1px at 520px 10px, rgba(255, 215, 0, 0.3), transparent),
+      radial-gradient(1px 1px at 590px 50px, rgba(255, 215, 0, 0.6), transparent);
     background-repeat: repeat;
-    background-size: 400px 200px;
-    animation: golden-dust-float 25s linear infinite;
-    pointer-events: none;
-    z-index: 1;
+    background-size: 600px 100px;
+    animation: golden-rain-fall 8s linear infinite;
   }
 
-  @keyframes golden-dust-float {
-    0% { transform: translateY(100vh) translateX(-10px) rotate(0deg); }
-    100% { transform: translateY(-200px) translateX(10px) rotate(360deg); }
+  @keyframes golden-rain-fall {
+    0% { 
+      transform: translateY(-100px) translateX(-20px);
+    }
+    100% { 
+      transform: translateY(100vh) translateX(20px);
+    }
   }
 
   .animate-pulse-glow {

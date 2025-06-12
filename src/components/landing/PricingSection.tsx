@@ -23,7 +23,7 @@ export const PricingSection = () => {
     },
     {
       name: "Básico",
-      price: "$10",
+      price: "$5",
       period: "/mes",
       description: "Para aventureros dedicados",
       icon: Star,
@@ -41,7 +41,7 @@ export const PricingSection = () => {
     },
     {
       name: "Completo",
-      price: "$20",
+      price: "$25",
       period: "/mes",
       description: "Para Dungeon Masters profesionales",
       icon: Crown,
