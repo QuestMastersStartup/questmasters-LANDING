@@ -1,9 +1,11 @@
 
-import { Zap, Globe, Clock } from "lucide-react";
+import { Zap, Globe, Clock, Play, Image, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const DemoSection = () => {
   return (
-    <section className="py-20 px-6">
+    <section className="py-20 px-6 golden-dust">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-cinzel font-bold text-4xl mb-4 gold-gradient">
@@ -14,7 +16,29 @@ export const DemoSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Video demo simulado */}
+        <div className="mb-16">
+          <Card className="glass-effect fantasy-border overflow-hidden">
+            <CardContent className="p-0">
+              <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-purple-500/10">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-20 h-20 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center hover-glow cursor-pointer">
+                      <Play className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="font-cinzel font-bold text-xl mb-2 gold-gradient">Demo Interactivo</h3>
+                    <p className="text-muted-foreground">Ve cómo la IA crea una campaña completa en minutos</p>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">LIVE</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div>
             <h3 className="font-cinzel font-bold text-2xl mb-6">Persistencia Narrativa</h3>
             <div className="space-y-4">
@@ -58,6 +82,46 @@ export const DemoSection = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Galería de herramientas simuladas */}
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="glass-effect hover-glow cursor-pointer group">
+            <CardContent className="p-6">
+              <div className="aspect-video bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-lg mb-4 flex items-center justify-center">
+                <Image className="w-12 h-12 text-primary group-hover:scale-110 transition-transform" />
+              </div>
+              <h3 className="font-cinzel font-bold text-lg mb-2 gold-gradient">Generador de Mapas</h3>
+              <p className="text-muted-foreground text-sm">Crea mapas detallados con biomas, ciudades y mazmorras automáticamente</p>
+            </CardContent>
+          </Card>
+
+          <Card className="glass-effect hover-glow cursor-pointer group">
+            <CardContent className="p-6">
+              <div className="aspect-video bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg mb-4 flex items-center justify-center">
+                <Users className="w-12 h-12 text-green-400 group-hover:scale-110 transition-transform" />
+              </div>
+              <h3 className="font-cinzel font-bold text-lg mb-2 gold-gradient">Creador de NPCs</h3>
+              <p className="text-muted-foreground text-sm">Genera personajes únicos con trasfondos, voces y motivaciones</p>
+            </CardContent>
+          </Card>
+
+          <Card className="glass-effect hover-glow cursor-pointer group">
+            <CardContent className="p-6">
+              <div className="aspect-video bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg mb-4 flex items-center justify-center">
+                <Zap className="w-12 h-12 text-purple-400 group-hover:scale-110 transition-transform" />
+              </div>
+              <h3 className="font-cinzel font-bold text-lg mb-2 gold-gradient">Asistente de Combate</h3>
+              <p className="text-muted-foreground text-sm">IA que gestiona iniciativa, estados y efectos automáticamente</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="text-center mt-12">
+          <Button size="lg" className="hover-glow bg-primary hover:bg-primary/90">
+            <Play className="w-5 h-5 mr-2" />
+            Explorar Todas las Herramientas
+          </Button>
         </div>
       </div>
     </section>
