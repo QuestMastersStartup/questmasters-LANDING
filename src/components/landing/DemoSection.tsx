@@ -16,22 +16,21 @@ export const DemoSection = () => {
           </p>
         </div>
 
-        {/* Video demo simulado */}
+        {/* Video demo funcional */}
         <div className="mb-16">
           <Card className="glass-effect fantasy-border overflow-hidden">
             <CardContent className="p-0">
-              <div className="relative aspect-video bg-gradient-to-br from-primary/10 to-purple-500/10">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center hover-glow cursor-pointer">
-                      <Play className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="font-cinzel font-bold text-xl mb-2 gold-gradient">Demo Interactivo</h3>
-                    <p className="text-muted-foreground">Ve cómo la IA crea una campaña completa en minutos</p>
-                  </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">LIVE</span>
+              <div className="relative aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/Rgrn-B5HsK0?si=Hm7rmvYC5WmX5ama"
+                  title="QuestMasters Demo - Cómo la IA crea una campaña completa"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full rounded-lg"
+                />
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold shadow-lg">LIVE</span>
                 </div>
               </div>
             </CardContent>
