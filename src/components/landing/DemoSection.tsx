@@ -22,7 +22,7 @@ export const DemoSection = () => {
             <CardContent className="p-0">
               <div className="relative aspect-video">
                 <iframe
-                  src="https://www.youtube.com/embed/Rgrn-B5HsK0?si=Hm7rmvYC5WmX5ama"
+                  src="https://www.youtube.com/embed/SYFYRIwdH2c"
                   title="QuestMasters Demo - Cómo la IA crea una campaña completa"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"
